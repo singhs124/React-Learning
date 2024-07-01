@@ -1,0 +1,48 @@
+import { useId } from "react";
+
+function InputBox({
+  label = "from",
+  amount,
+  onChangeAmt,
+  selectCurrency = "usd",
+  onChangeCurrency,
+  currencyOptions = ["usd","inr","abc"],
+  amountdisable = false ,
+  currencydisable = false,
+
+  className = "",
+}) {
+   const amountInputId =  useId();
+  return (
+    <div className={`bg-white p-3 rounded-lg text-sm flex `}>
+      <div className="w-1/2">
+        <label htmlFor={amountInputId} className="text-black/40 mb-2 inline-block">{label}</label>
+        <input
+          id={amountInputId}
+          className="outline-none w-full bg-transparent py-1.5"
+          type="number"
+          placeholder="Amount"
+          value={amount}
+          onChange={(e)=> onChangeAmt && onChangeAmt(Number(e.target.value))}
+          disabled={amountdisable}
+        />
+      </div>
+      <div className="w-1/2 flex flex-wrap justify-end text-right">
+        <p className="text-black/40 mb-2 w-full">Currency Type</p>
+        <select className="rounded-lg px-1 py-1 bg-gray-100 cursor-pointer outline-none"
+        value={selectCurrency}
+        onChange={(e)=> onChangeCurrency && onChangeCurrency(e.target.value)}
+        disabled={currencydisable}
+        >
+          {
+            currencyOptions.map((currency)=>(
+                <option key={currency} value={currency}>{currency}</option>
+            ))
+          }
+        </select>
+      </div>
+    </div>
+  );
+}
+
+export default InputBox;
